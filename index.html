@@ -3,42 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxAlgo</title>
-    <style>
+    <title>Mi Página Web - Inspirada en LuxAlgo</title>
+    <link rel="icon" href="/favicon.ico"> <link rel="apple-touch-icon" href="/apple-touch-icon.png"> <style>
+        /* Colores inspirados en LuxAlgo (ajusta según necesites) */
+        :root {
+            --midnight-900: #0D0C1F; /* Fondo principal */
+            --slate-100: #F1F5F9; /* Texto claro */
+            --slate-900: #0F172A; /* Color de fondo para elementos como dropdowns */
+            --slate-600: #475569; /* Borde de elementos */
+            --white: #FFFFFF;
+            --sky-500: #0EA5E9;
+            --cyan-500: #06B6D4;
+            --cobalt-500: #0D0C1F; /* Un azul oscuro, puedes ajustar */
+            --linear-gradient-hover: linear-gradient(to right, var(--sky-500), var(--cyan-500), var(--cobalt-500));
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f0f12;
-            color: white;
             margin: 0;
-        }
-        .navbar {
-            background-color: #1a1a1f;
-            padding: 20px;
+            font-family: sans-serif; /* Puedes cambiar la fuente si tienes una similar a LuxAlgo */
+            background-color: var(--midnight-900); /* Fondo principal oscuro */
+            color: var(--slate-100); /* Color de texto predeterminado */
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
         }
-        .logo {
-            font-size: 24px;
+
+        /* Estilos para el encabezado (barra de navegación) */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            padding: 1.5rem 1.5rem 0.75rem 2.5rem; /* pt-6 pb-3 pl-10 pr-6 */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(13, 12, 31, 0.9); /* Un poco transparente como el original */
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.18);
+        }
+
+        .header .logo {
+            height: 30px;
+            width: 135px;
+            color: var(--white);
+            /* Puedes insertar el SVG del logo aquí o usar una imagen */
+        }
+
+        .header .nav-links {
+            display: none; /* Ocultar por defecto para móviles */
+            align-items: center;
+            gap: 1.5rem; /* gap-6 */
+        }
+
+        .header .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem; /* p-2 */
+            transition: color 0.2s ease;
+        }
+
+        .header .nav-links a:hover {
+            color: var(--slate-400); /* No definida en :root, pero sería un gris medio */
+        }
+
+        .header .mobile-menu-button {
+            display: block; /* Mostrar por defecto para móviles */
+            padding: 0.5rem;
+            color: var(--white);
+            border: 1px solid var(--slate-600);
+            border-radius: 0.5rem;
+            background-color: rgba(15, 23, 42, 0.2); /* bg-slate-950/20 */
+            transition: all 0.2s ease;
+        }
+
+        .header .mobile-menu-button:hover {
+            color: var(--slate-400);
+        }
+
+        /* Estilos para la sección hero (principal) */
+        .hero-section {
+            padding-top: 12rem; /* pt-48 */
+            padding-bottom: 6rem; /* pb-24 */
+            text-align: center;
+            position: relative; /* Para las "líneas" de fondo */
+            overflow: hidden; /* Asegura que las imágenes de fondo no desborden */
+            flex-grow: 1; /* Para que ocupe el espacio restante */
+        }
+
+        .hero-section .container {
+            max-width: 1280px; /* container mx-auto */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem;
+            position: relative;
+            z-index: 10; /* Para que el texto esté por encima de las gráficas */
+            display: flex;
+            flex-direction: column;
+            gap: 3rem; /* space-y-12 */
+        }
+
+        .hero-section h1 {
+            font-size: 3rem; /* text-5xl */
+            line-height: 1.2;
             font-weight: bold;
         }
-        .hero {
-            padding: 100px 20px;
-            text-align: center;
+
+        .hero-section h1 span {
+            color: var(--white);
+            mix-blend-mode: overlay;
+            opacity: 0.9;
+        }
+
+        .hero-section h2 {
+            font-size: 1.25rem; /* text-xl */
+            line-height: 1.5;
+        }
+
+        /* Botón "Get 30 Days Risk Free" */
+        .hero-section .cta-button {
+            display: inline-block;
+            padding: 0.75rem 1.25rem; /* px-5 py-1.5, ajustado para mejor visibilidad */
+            border-radius: 9999px; /* rounded-full */
+            border: 1px solid var(--slate-600); /* Border similar al original */
+            position: relative;
+            overflow: hidden; /* Para el efecto de brillo */
+            text-decoration: none;
+            color: var(--slate-900); /* light:text-slate-100 */
+            background-color: var(--slate-100); /* light:bg-slate-800 */
+            transition: all 0.2s ease-in;
+            z-index: 1; /* Para estar sobre el efecto de brillo */
+        }
+
+        .hero-section .cta-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            background: var(--linear-gradient-hover);
+            filter: blur(8px); /* blur-sm */
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: -1;
+        }
+
+        .hero-section .cta-button:hover::before {
+            opacity: 1;
+            transform: scale(1.05); /* group-hover:scale-105 */
+        }
+        .hero-section .cta-button:hover {
+            color: var(--slate-900);
+            background-color: var(--slate-50); /* light:hover:bg-slate-900 */
+            transform: scale(1.05);
+        }
+
+        .hero-section .cta-button div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Fondos decorativos (simulando los SVG) */
+        .background-graphics {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Para que no interfieran con la interacción */
+            overflow: hidden;
+        }
+
+        .background-graphics .top-graphic {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1500px;
+            height: 1500px;
+            background: radial-gradient(circle at center, rgba(6,182,212,0.1) 0%, rgba(13,12,31,0) 70%); /* Cian sutil */
+        }
+
+        .background-graphics .right-graphic {
+            position: absolute;
+            top: 200px;
+            right: 0;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle at center, rgba(14,165,233,0.1) 0%, rgba(13,12,31,0) 70%); /* Azul sutil */
+        }
+
+
+        /* Media Queries para responsividad */
+        @media (min-width: 1024px) { /* lg */
+            .header {
+                padding-left: 3rem; /* lg:pl-12 */
+            }
+            .header .nav-links {
+                display: flex; /* Mostrar en pantallas grandes */
+            }
+            .header .mobile-menu-button {
+                display: none; /* Ocultar en pantallas grandes */
+            }
+            .hero-section h1 {
+                font-size: 4.5rem; /* sm:text-7xl */
+            }
+            .hero-section h2 {
+                font-size: 1.5rem; /* sm:text-2xl */
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">LUX</div>
-        <div class="links">
-            <a href="#" style="color: #94a3b8; text-decoration: none; margin-left: 20px;">Productos</a>
-            <a href="#" style="color: #94a3b8; text-decoration: none; margin-left: 20px;">Recursos</a>
+    <div class="background-graphics">
+        <div class="top-graphic"></div>
+        <div class="right-graphic"></div>
+    </div>
+
+    <header class="header">
+        <a class="logo" href="/">
+            Tu Logo
+        </a>
+        <div class="nav-links">
+            <a href="#">Características</a>
+            <a href="#">Recursos</a>
+            <a href="#">Librería</a>
+            <a href="#">Precios</a>
+            <a href="#">Cuenta</a>
         </div>
-    </nav>
-    <section class="hero">
-        <h1>Plataforma de Trading Avanzado</h1>
-        <p>Indicadores algorítmicos para traders profesionales</p>
-    </section>
-</body>
+        <button class="mobile-menu-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-6 h-6"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"></path></svg>
+        </button>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <div>
+                    <h1>Tu Gran Titular Aquí<br/><span style="text-shadow: 0 0 10px rgba(0,0,0,0.5)">Tu Mensaje Clave</span></h1>
+                </div>
+                <h2>Un subtítulo atractivo para tu proyecto o negocio.</h2>
+                <a href="#contacto" class="cta-button">
+                    <div>
+                        Empieza Ahora
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" class="w-4 h-4"><path fill-rule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clip-rule="evenodd"></path></svg>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section style="padding: 3rem; text-align: center;">
+            <h3>Aquí va el resto de tu contenido</h3>
+            <p>Puedes añadir más secciones, texto, y elementos para construir tu página.</p>
+        </section>
+    </main>
+
+    </body>
 </html>
